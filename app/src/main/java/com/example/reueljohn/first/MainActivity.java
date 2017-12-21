@@ -18,83 +18,22 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mDate;
-    private TextView mTime;
-
+    private TextView nameText, usernameText, addressText, companyText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        mDate = (TextView) findViewById(R.id.dateText);
-        mTime = (TextView) findViewById(R.id.timeText);
+    public void displayUser(View view){
 
+        new GetUserInfo(nameText, usernameText, addressText, companyText).execute();
 
 
     }
 
-    public void getDateAndTime(View view){
-
-        new GetDateAndTime(mDate, mTime).execute();
-
-
-    }
-
-    public static String connectToUrl(){
-        HttpURLConnection urlConnection = null;
-        String dateAndTimeJson = null;
-        BufferedReader reader = null;
-
-        try {
-            URL url = new URL("http://date.jsontest.com");
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-
-            if (inputStream == null) {
-
-                return null;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-
-                buffer.append(line + "\n");
-            }
-            if (buffer.length() == 0) {
-
-                return null;
-            }
-
-            dateAndTimeJson = buffer.toString();
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return dateAndTimeJson;
-
-
-    }
 
 
 

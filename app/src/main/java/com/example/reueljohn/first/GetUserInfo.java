@@ -19,7 +19,7 @@ import java.util.List;
  * Created by reueljohn on 21/12/2017.
  */
 
-public class GetUserInfo extends AsyncTask<String, Void, String> {
+public class GetUserInfo extends AsyncTask<String, String, String> {
 
     //private TextView nameText, usernameText, addressText, companyText;
 
@@ -43,28 +43,37 @@ public class GetUserInfo extends AsyncTask<String, Void, String> {
                 JSONObject user = usersArray.getJSONObject(i);
                 JSONObject jAddress = user.getJSONObject("address");
                 JSONObject jCompany = user.getJSONObject("company");
+                Users newUser = new Users();
+            /*    newUser.name = user.getString("name");
+                newUser.username = user.getString("username");
+                newUser.street = jAddress.getString("street");
+                newUser.city =  jAddress.getString("city");
+                newUser.company = jCompany.getString("name");
+                users.add(newUser);*/
+
+
                 try {
-                    Users newUser = new Users();
-                    newUser.setName(user.getString("name"));
-                    newUser.setUsername(user.getString("username"));
-                    newUser.setStreet(jAddress.getString("street"));
-                    newUser.setCity(jAddress.getString("city"));
-                    newUser.setCompany(jCompany.getString("name"));
+                    newUser.name = user.getString("name");
+                    newUser.username = user.getString("username");
+                    newUser.street = jAddress.getString("street");
+                    newUser.city =  jAddress.getString("city");
+                    newUser.company = jCompany.getString("name");
                     users.add(newUser);
                 }
 
                 catch (Exception e){
                     e.printStackTrace();
                 }
+
             }
 
-            recyclerView = (RecyclerView) recyclerView.findViewById(R.id.recyclerview);
+            recyclerView = (RecyclerView) recyclerView.findViewById(R.id.userList);
             adapter = new UserListAdapter(context, users);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
-        } catch (Exception e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

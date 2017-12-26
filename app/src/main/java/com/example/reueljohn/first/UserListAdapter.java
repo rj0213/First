@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,11 +16,11 @@ import java.util.List;
  * Created by reueljohn on 22/12/2017.
  */
 
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
+public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private Context context;
-    private List<Users> users = new ArrayList<>();
+    private List<Users> users = Collections.emptyList();
     private LayoutInflater mInflater;
 
     public UserListAdapter(Context context, List<Users> users){
@@ -30,21 +31,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     }
 
     @Override
-    public UserListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = mInflater.inflate(R.layout.user_list, parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(UserListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         Users current = users.get(position);
         ViewHolder myHolder = (ViewHolder) holder;
-        myHolder.nameText.setText(current.getName());
-        myHolder.usernameText.setText(current.getUsername());
-        myHolder.addressText.setText(current.getStreet() + " " + current.getCity());
-        myHolder.companyText.setText(current.getCompany());
+        myHolder.nameText.setText(current.name);
+        myHolder.usernameText.setText(current.username);
+        myHolder.addressText.setText(current.street + " " + current.city);
+        myHolder.companyText.setText(current.company);
 
 
     }
@@ -54,7 +55,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         return users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameText, usernameText, addressText,companyText;
 

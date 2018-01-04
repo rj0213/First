@@ -1,11 +1,16 @@
 package com.example.reueljohn.first;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -15,12 +20,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mDate;
-    private TextView mTime;
 
+    private List<Users> users = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private UserListAdapter adapter;
 
 
     @Override
@@ -28,77 +36,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDate = (TextView) findViewById(R.id.dateText);
-        mTime = (TextView) findViewById(R.id.timeText);
-
-
+        new FetchData().execute();
 
     }
 
-    public void getDateAndTime(View view){
+    private class FetchData extends AsyncTask<String,String ,String>{
 
-        new GetDateAndTime(mDate, mTime).execute();
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try {
+                JSONArray usersArray = new JSONArray(s);
+                for (int i = 0; i < usersArray.length(); i++) {
+                    JSONObject user = usersArray.getJSONObject(i);
+                    JSONObject jAddress = user.getJSONObject("address");
+                    JSONObject jCompany = user.getJSONObject("company");
+                    Users newUser = new Users();
 
+                    newUser.name = user.getString("name");
+                    newUser.username = user.getString("username");
+                    newUser.street = jAddress.getString("street");
+                    newUser.city = jAddress.getString("city");
+                    newUser.company = jCompany.getString("name");
 
-    }
+                    users.add(newUser);
 
-    public static String connectToUrl(){
-        HttpURLConnection urlConnection = null;
-        String dateAndTimeJson = null;
-        BufferedReader reader = null;
-
-        try {
-            URL url = new URL("http://date.jsontest.com");
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-
-            if (inputStream == null) {
-
-                return null;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-
-                buffer.append(line + "\n");
-            }
-            if (buffer.length() == 0) {
-
-                return null;
-            }
-
-            dateAndTimeJson = buffer.toString();
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+
+                recyclerView = (RecyclerView) findViewById(R.id.userList);
+                adapter = new UserListAdapter(MainActivity.this, users);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+                
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
 
-        return dateAndTimeJson;
-
-
+        @Override
+        protected String doInBackground(String... strings) {
+            return NetworkConnect.getUsers();
+        }
     }
-
-
-
-
-
-
 }

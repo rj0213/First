@@ -1,20 +1,13 @@
-package com.example.reueljohn.first;
+package com.example.reueljohn.first.Old;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.reueljohn.first.Model.Example;
+import com.example.reueljohn.first.Old.Users;
+
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+
+import retrofit2.Callback;
 
 /**
  * Created by reueljohn on 22/12/2017.
@@ -20,11 +23,11 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     private Context context;
-    private List<Users> users = Collections.emptyList();
+    private List<Example> users;
     private LayoutInflater mInflater;
 
-    public UserListAdapter(Context context, List<Users> users){
-        this.context = context;
+
+    public UserListAdapter(Context context, List<Example> users){
         mInflater = LayoutInflater.from(context);
         this.users = users;
 
@@ -40,12 +43,12 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Users current = users.get(position);
+        Example current = users.get(position);
         ViewHolder myHolder = (ViewHolder) holder;
-        myHolder.nameText.setText(current.name);
-        myHolder.usernameText.setText(current.username);
-        myHolder.addressText.setText(current.street + " " + current.city);
-        myHolder.companyText.setText(current.company);
+        myHolder.nameText.setText(current.getName());
+        myHolder.usernameText.setText(current.getUsername());
+        myHolder.addressText.setText(current.getAddress().getCity());
+        myHolder.companyText.setText(current.getCompany().getName());
 
 
     }

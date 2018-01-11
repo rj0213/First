@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Title"
         android:textColor="@android:color/black"
-        android:textSize="10sp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
     <TextView
         android:id="@+id/urlTxt"
@@ -22,5 +22,11 @@
         android:textColor="@android:color/black"
         android:layout_below="@+id/title"
         />
+    <ImageView
+        android:id="@+id/photoImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

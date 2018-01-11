@@ -43,7 +43,6 @@ public class GetUserInfo extends AsyncTask<String, String, String> {
                 newPhoto.title = photoNum.getString("title");
                 newPhoto.url = photoNum.getString("url");
 
-
                 photos.add(newPhoto);
 
             }

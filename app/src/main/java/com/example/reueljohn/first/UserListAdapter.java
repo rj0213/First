@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -42,6 +43,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ViewHolder myHolder = (ViewHolder) holder;
         myHolder.titleText.setText(current.title);
         myHolder.urlText.setText(current.url);
+        new GetPhotos(myHolder.photoImg).execute(current.url);
 
 
 
@@ -55,11 +57,13 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView titleText, urlText;
+        ImageView photoImg;
 
         public ViewHolder(View view){
             super(view);
             titleText = (TextView) view.findViewById(R.id.titleTxt);
             urlText = (TextView) view.findViewById(R.id.urlTxt);
+            photoImg =(ImageView) view.findViewById(R.id.photoImg);
 
         }
     }

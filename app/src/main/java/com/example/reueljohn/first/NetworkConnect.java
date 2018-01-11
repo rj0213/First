@@ -22,7 +22,7 @@ public class NetworkConnect {
         String userJsonString = null;
 
         try {
-            URL url = new URL("https://jsonplaceholder.typicode.com/users");
+            URL url = new URL("https://jsonplaceholder.typicode.com/photos");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();

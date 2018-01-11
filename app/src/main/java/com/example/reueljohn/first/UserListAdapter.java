@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,13 +18,13 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     private Context context;
-    private List<Users> users = Collections.emptyList();
+    private List<Photos> photos = Collections.emptyList();
     private LayoutInflater mInflater;
 
-    public UserListAdapter(Context context, List<Users> users){
+    public UserListAdapter(Context context, List<Photos> photos){
         this.context = context;
         mInflater = LayoutInflater.from(context);
-        this.users = users;
+        this.photos = photos;
 
     }
 
@@ -40,31 +38,29 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Users current = users.get(position);
+        Photos current = photos.get(position);
         ViewHolder myHolder = (ViewHolder) holder;
-        myHolder.nameText.setText(current.name);
-        myHolder.usernameText.setText(current.username);
-        myHolder.addressText.setText(current.street + " " + current.city);
-        myHolder.companyText.setText(current.company);
+        myHolder.titleText.setText(current.title);
+        myHolder.urlText.setText(current.url);
+
 
 
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return photos.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameText, usernameText, addressText,companyText;
+        TextView titleText, urlText;
 
         public ViewHolder(View view){
             super(view);
-            nameText = (TextView) view.findViewById(R.id.name);
-            usernameText = (TextView) view.findViewById(R.id.username);
-            addressText = (TextView) view.findViewById(R.id.address);
-            companyText = (TextView) view.findViewById(R.id.company);
+            titleText = (TextView) view.findViewById(R.id.titleTxt);
+            urlText = (TextView) view.findViewById(R.id.urlTxt);
+
         }
     }
 }
